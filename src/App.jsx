@@ -1,48 +1,15 @@
-import { useState } from 'react'
-import Navbar from './components/Navbar/Navbar.jsx'
+import React from 'react';
+import Navbar from './components/Navbar/Navbar.jsx';
+import AccountModal from './components/Accounts/AccountModal.jsx';
+import { AppProvider } from './context/AppContext.jsx';
 
 function App() {
   return (
-    <>
+    <AppProvider>
       <Navbar />
-      <p>HI Abhay1</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-      <p>HI Abhay</p>
-    </>
-  )
+      <AccountModal />
+    </AppProvider>
+  );
 }
 
-export default App
+export default App;
