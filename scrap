@@ -132,3 +132,7 @@
         /* display: none; */
     }
 }
+
+$ {
+    isOpen ? 'opacity-100 visible': 'opacity-0 invisible'
+}

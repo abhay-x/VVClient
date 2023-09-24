@@ -3,3 +3,7 @@ REACT_APP_API_URL=http://your-backend-api-url
 REACT_APP_API_KEY=api-key
 
 npm run dev
+
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+ content: ["./src/**/*.{html,js}"],

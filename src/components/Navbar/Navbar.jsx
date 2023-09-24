@@ -4,28 +4,9 @@ import { useAppContext } from '../../context/AppContext.jsx';
 import './Navbar.css'
 
 function Navbar() {
+    const { loginState, toggleAccountModal } = useAppContext();
     const [mode, setMode] = useState('light');
-    const [showMenu, setShowMenu] = useState(false);
-    const { loggedIn, handleLogout, toggleAccountModal } = useAppContext(); // Use handleLoginModalOpen instead of toogleLoginModal
-
-    const currentUser = {
-        userId: 123,
-        name: "Abhay raj",
-        email: "abhay@123"
-    }
-
-    const changeMode = () => {
-        if (mode === 'light') {
-            setMode('dark');
-        } else {
-            setMode('light');
-        }
-    };
-
-    const handleUserMenu = () => {
-        setShowMenu((showMenu) => !showMenu);
-    };
-
+    const changeMode = () => setMode(mode === 'light' ? 'dark' : 'light');
     const toggleMenu = () => { };
 
     return (
@@ -41,17 +22,10 @@ function Navbar() {
             </div>
 
             <div className='nav_right flex'>
-                {loggedIn ? (
+                {loginState ? (
                     <>
                         <button className="sqr_btn btn btn_margin">Create</button>
-                        <button className="profile_btn" onClick={handleUserMenu} onBlur={() => setShowMenu(false)}>
-                            <img src="" alt="" />
-                        </button>
-                        <UserMenu
-                            showMenu={showMenu}
-                            handleLogout={handleLogout}
-                            currentUser={currentUser}
-                        />
+                        <UserMenu />
                     </>
                 ) : (
                     <>
