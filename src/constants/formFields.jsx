@@ -18,7 +18,7 @@ const loginFields = [
 ];
 
 const signupFields = [
-  createFormField("Username", "username", "username", "username", "text", "username", true, "Username"),
+  createFormField("Name", "name", "name", "name", "text", "name", true, "Full Name"),
   createFormField("Email address", "email", "email", "email", "email", "email", true, "Email address"),
   createFormField("Password", "password", "password", "password", "password", "current-password", true, "Password"),
   createFormField("Confirm Password", "confirmPassword", "confirmPassword", "confirmPassword", "password", "confirmPassword", true, "Confirm Password"),

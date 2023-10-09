@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { UserMenu } from './UserMenu.jsx';
-import { useAppContext } from '../../context/AppContext.jsx';
+import { AuthContext } from '../../context/AuthContext.jsx';
+import { StateContext } from '../../context/StateContext.jsx';
 import './Navbar.css'
 
 function Navbar() {
-    const { loginState, toggleAccountModal } = useAppContext();
+    const { loginState } = useContext(AuthContext);
+    const { accountModalShow, setAccountModalShow } = useContext(StateContext);
+    
     const [mode, setMode] = useState('light');
     const changeMode = () => setMode(mode === 'light' ? 'dark' : 'light');
     const toggleMenu = () => { };
@@ -30,7 +33,7 @@ function Navbar() {
                 ) : (
                     <>
                         <button className="btn btn_margin" onClick={changeMode}><img src={`/icons/${mode}.png`} className='icon' /></button>
-                        <button className="sqr_btn btn" onClick={toggleAccountModal}>Sign in</button>
+                        <button className="sqr_btn btn" onClick={() => setAccountModalShow(!accountModalShow)}>Sign in</button>
                     </>
                 )}
             </div>

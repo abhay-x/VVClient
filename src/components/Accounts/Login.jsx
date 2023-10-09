@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useAppContext } from "../../context/AppContext";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { loginFields } from "../../constants/formFields";
 import Input from "../Form/Input";
 import Button from '../Form/Button';
 
-const fields = loginFields;
-let fieldsState = {};
-fields.forEach(field => fieldsState[field.id] = '');
-
 export default function Login() {
-    const { apiUrl, setLoginState, toggleAccountModal } = useAppContext();
+    let fieldsState = {};
+    loginFields.forEach(field => fieldsState[field.id] = '');
+
+    const { login } = useContext(AuthContext);
     const [fieldState, setfieldState] = useState(fieldsState);
     const [errors, setErrors] = useState({});
     const handleChange = (event) => setfieldState({ ...fieldState, [event.target.id]: event.target.value });
+    const [response, setResponse] = useState({});
 
     const isEmailValid = (email) => {
         // Regular expression for basic email validation
@@ -27,7 +27,7 @@ export default function Login() {
         return password.length >= minLength && hasSpecialCharacter;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission behavior
         const { email, password } = fieldState;
         console.log(email, password)
@@ -45,46 +45,13 @@ export default function Login() {
             validationErrors.password = 'Password must be at least 8 characters long and contain at least one special character.';
         }
 
-        // If there are validation errors, set the state and return
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
+        // If there are validation errors, set the state
+        setErrors(validationErrors);
+        setResponse({});
 
         // If there are no validation errors, proceed with login
-        authenticateUser({ email, password });
-    };
-
-    //Handle Login API Integration here
-    const authenticateUser = async (userData) => {
-        try {
-            // API call to the backend server endpoint to handle login
-            const response = await fetch(`${apiUrl}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'mode': 'no-cors',
-                },
-                body: JSON.stringify(userData),
-            });
-
-            if (response.ok) {
-                // after successful Login,hv to perform the actions like set user session.
-                // then redirect user to the dashboard or current page.
-                const { token } = await response.json();
-                // saving the token in a cookie
-                document.cookie = `token=${token}; path=/;`;
-
-                toggleAccountModal();
-                setLoginState(true);
-                console.log('Login successful!');
-            } else {
-                // hv to handle Login failed error by showing error message to the user
-                console.error('Login failed!');
-            }
-        } catch (error) {
-            // errors that occurred during the API call
-            console.error('An error occurred during login:', error);
+        if (Object.keys(validationErrors).length == 0) {
+            setResponse(await login({ email, password }));
         }
     };
 
@@ -92,7 +59,7 @@ export default function Login() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="-space-y-px">
                 {
-                    fields.map(field => (
+                    loginFields.map(field => (
                         <div key={field.id}>
                             <Input
                                 key={field.id}
@@ -130,6 +97,9 @@ export default function Login() {
                     </a>
                 </div>
             </div>
+            {response && response.status !== undefined && response.message && (
+                <span className="fill-current h-6 w-6 text-orange-500">{response.message}</span>
+            )}
             <p className='flex items-center justify-center'>
                 <Button text='Login' type='submit' onClick={handleSubmit} className={"bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"} />
             </p>
