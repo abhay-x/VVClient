@@ -32,8 +32,8 @@ export const useHttpClient = () => {
             const response = await fetch(`${apiUrl}${endpoint}`, config);
             // Parse the response body
             const responseData = await response.json();
-            console.info(response);
-            console.info(responseData);
+            //console.info(response);
+            //console.info(responseData);
 
             // Remove abortCtrl from the array of controllers once the req completes
             activeHttpReqs.current = activeHttpReqs.current.filter(

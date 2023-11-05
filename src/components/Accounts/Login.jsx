@@ -50,7 +50,7 @@ export default function Login() {
         setResponse({});
 
         // If there are no validation errors, proceed with login
-        if (Object.keys(validationErrors).length == 0) {
+        if (Object.keys(validationErrors).length === 0) {
             setResponse(await login({ email, password }));
         }
     };
